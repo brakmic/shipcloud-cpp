@@ -1,6 +1,6 @@
 ## ShipCloud C++ Binding
 
-This project contains a Visual C++ Solution with two projects:
+This repo contains a Visual C++ Solution with two projects:
 
 * ShipCloud DLL
 * Console-based Client

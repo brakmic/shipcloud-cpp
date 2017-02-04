@@ -19,7 +19,7 @@ namespace responses = shipcloud::api::v1::types::responses;
 class SHIPCLOUD_API ShipCloud {
 public:
 	ShipCloud(std::wstring apiKey);
-	~ShipCloud();
+	virtual ~ShipCloud();
 	ShipCloud(const ShipCloud& other) = delete;
 	ShipCloud(ShipCloud&& other) = delete;
 	ShipCloud& operator=(const ShipCloud& other) = delete;

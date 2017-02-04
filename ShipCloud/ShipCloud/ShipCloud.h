@@ -23,6 +23,7 @@ public:
 	ShipCloud(const ShipCloud& other) = delete;
 	ShipCloud(ShipCloud&& other) = delete;
 	ShipCloud& operator=(const ShipCloud& other) = delete;
+	ShipCloud& operator=(ShipCloud&& other) = delete;
 	pplx::task<responses::AddressResponse> ShipCloud::createAddress(types::Address& address);
 	static std::string address_to_string(types::Address& address);
 	static types::responses::AddressResponse parse_address_response(web::json::value& response);

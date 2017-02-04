@@ -13,6 +13,10 @@ The code in this solution utilizes some nice C++14 features and relies upon thes
 
 Before building the projects check if you have Nuget-Packages for C++ REST SDK installed on your machine. The JSON header file is located under **vendors** directory.
 
+### Demo 
+
+<img src="https://i.imgsafe.org/6350e72ccf.png" width="650" height="350">
+
 ### License 
 
 [MIT](https://github.com/brakmic/shipcloud-cpp/blob/master/LICENSE)

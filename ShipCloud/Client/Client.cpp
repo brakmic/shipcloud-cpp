@@ -21,7 +21,7 @@ std::unique_ptr<api::types::Address> getDummyAddress() {
 int main()
 {
 	// your API key (register here for a free version: https://developers.shipcloud.io/)
-	std::wstring apiKey = L"a742d19ce4a634a47c62ecaeb3843cf8";
+	std::wstring apiKey = L"YOUR_API_KEY";
 	// initialize ShipCloud helper class
 	auto shipCloud = std::unique_ptr<ShipCloud>(new ShipCloud(apiKey));
 	// create a test address

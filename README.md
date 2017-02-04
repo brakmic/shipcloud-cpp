@@ -15,7 +15,7 @@ Before building the projects check if you have Nuget-Packages for C++ REST SDK i
 
 ### Demo 
 
-<img src="https://i.imgsafe.org/6350e72ccf.png" width="650" height="350">
+<img src="https://i.imgsafe.org/6350e72ccf.png" width="850" height="450">
 
 ### License 
 

@@ -50,10 +50,10 @@ ShipCloud::~ShipCloud()
 {
 }
 /*
-* Send async POST request
+* Send async POST request to create a new Address
 */
 pplx::task<responses::AddressResponse> ShipCloud::createAddress(types::Address& address) {
-	_trace(L"%S %S", L"Connecting web server ", this->apiUrl);
+	//_trace(L"%S %S", L"Connecting web server ", this->apiUrl);
 	
 	http_request req(methods::POST);
 	req.headers().add(U("Authorization"), this->get_auth_data());
@@ -75,6 +75,39 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(types::Address& 
 	});;
 }
 /*
+* Send async GET request to query all known Addresses
+*/
+pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses() {
+	http_request req(methods::GET);
+	req.headers().add(U("Authorization"), this->get_auth_data());
+	req.set_request_uri(U("/v1/addresses"));
+	req.headers().set_content_type(U("application/json"));
+	
+	http_client client(uri(this->apiUrl));
+
+	return client.request(req).then([=](http_response response) -> pplx::task<json::value>
+	{
+		if (response.status_code() == status_codes::OK)
+		{
+			return response.extract_json();
+		}
+		return pplx::task_from_result(json::value(U("error")));
+	}).then([=](json::value json) -> std::vector<responses::AddressResponse> {
+		std::stringstream ss;
+		auto s = json.serialize();
+		ss << utility::conversions::to_utf8string(json.serialize());
+		auto p = modernJson::parse(ss);
+		std::vector<responses::AddressResponse> vec;
+		for (auto& v : p.front()) {
+			auto str = v.dump();
+			auto a = ShipCloud::parse_address_string(str);
+			vec.push_back(std::move(a));
+		}
+		return vec;
+	});;
+}
+
+/*
 * Convert Address into a JSON-ified string
 */
 std::string ShipCloud::address_to_string(types::Address& address)
@@ -94,6 +127,13 @@ std::string ShipCloud::address_to_string(types::Address& address)
 	j["phone"] = address.phone;
 	return j.dump();
 }
+
+types::responses::AddressResponse ShipCloud::parse_address_string(std::string response) {
+	std::stringstream ss;
+	ss << response;
+	auto val = json::value::parse(ss);
+	return ShipCloud::parse_address_response(val);
+}
 /*
 * Convert JSON response into AddressResponse
 */
@@ -104,18 +144,19 @@ types::responses::AddressResponse ShipCloud::parse_address_response(json::value&
 	ss << utility::conversions::to_utf8string(response.serialize());
 	auto p = modernJson::parse(ss);
 	r.id = p.value("id", "");
-	r.care_of = p.value("care_of", "");
+	r.care_of = !p["care_of"].is_null() ? p.value("care_of", "") : "";
 	r.company = p.value("company", "");
 	r.first_name = p.value("first_name", "");
 	r.last_name = p.value("last_name", "");
-	r.phone = p.value("phone", "");
+	r.phone = !p["phone"].is_null() ? p.value("phone", "") : "";
 	r.street = p.value("street", "");
 	r.street_no = p.value("street_no", "");
 	r.city = p.value("city", "");
-	r.state = p.value("state", "");
+	r.state = !p["state"].is_null() ? p.value("state", "") : "";
 	r.zip_code = p.value("zip_code", "");
 	return r;
 }
+
 /*
 * Convert auth data into base64 string
 */

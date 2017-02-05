@@ -1,6 +1,8 @@
 #include "stdafx.h"
 
 namespace api = shipcloud::api::v1;
+// JSON for Modern C++
+using modernJson = nlohmann::json;
 
 std::unique_ptr<api::types::Address> getDummyAddress() {
 	auto adr = std::unique_ptr<api::types::Address>(new api::types::Address());
@@ -27,9 +29,14 @@ int main()
 	// create a test address
 	auto adr = getDummyAddress();
 	// use async method `createAddress` to send a POST request containing above address
-	shipCloud->createAddress(*adr).then([&](types::responses::AddressResponse& response) -> void {
-		// print response in the console
-		std::cout << "Response: " << types::responses::AddressResponse::to_string(response) << "\r\n";
+	//shipCloud->createAddress(*adr).then([=](types::responses::AddressResponse& response) -> void {
+	//	// print response in the console
+	//	std::cout << "Response: " << types::responses::AddressResponse::to_string(response) << "\r\n";
+	//}).wait();
+	shipCloud->readAllAddresses().then([=](std::vector<types::responses::AddressResponse> addresses) -> void {
+		for (auto& a : addresses) {
+			std::cout << a.to_string() << "\r\n";
+		}
 	}).wait();
 	system("PAUSE");
     return 0;

@@ -4,11 +4,11 @@
 // Casablanca C++ SDK namespaces
 using namespace concurrency;
 using namespace concurrency::streams;
-using namespace utility;									// Common utilities like string conversions
-using namespace web;										// Common features like URIs.
-using namespace web::http;									// Common HTTP functionality
-using namespace web::http::client;							// HTTP client features
-using namespace concurrency::streams;						// Asynchronous streams
+using namespace utility;				// Common utilities like string conversions
+using namespace web;					// Common features like URIs.
+using namespace web::http;				// Common HTTP functionality
+using namespace web::http::client;		// HTTP client features
+using namespace concurrency::streams;	// Asynchronous streams
 using namespace web::http::experimental::listener;          // HTTP server
 using namespace web::experimental::web_sockets::client;     // WebSockets client
 using namespace web::json;                                  // JSON library

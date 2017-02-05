@@ -19,7 +19,7 @@ Before building the projects check if you have Nuget-Packages for C++ REST SDK i
 
 ### Configuration
 
-Put your API-key into **config.json** and start the **client.exe**.
+Put your API-key into [config.json](https://github.com/brakmic/shipcloud-cpp/blob/master/ShipCloud/Client/config.json) and start the **client.exe**.
 
 ### License 
 

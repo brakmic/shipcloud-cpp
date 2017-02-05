@@ -10,15 +10,16 @@
 #define SHIPCLOUD_API __declspec(dllimport)
 #endif
 
-#include "stdafx.h"
 namespace api = shipcloud::api::v1;
 namespace types = shipcloud::api::v1::types;
 namespace responses = shipcloud::api::v1::types::responses;
+// JSON for Modern C++
+using modernJson = nlohmann::json;
 
 // This class is exported from the ShipCloud.dll
 class SHIPCLOUD_API ShipCloud {
 public:
-	ShipCloud(std::wstring apiKey);
+	ShipCloud(std::string apiKey);
 	virtual ~ShipCloud();
 	ShipCloud(const ShipCloud& other) = delete;
 	ShipCloud(ShipCloud&& other) = delete;
@@ -31,6 +32,16 @@ public:
 	static types::responses::AddressResponse ShipCloud::parse_address_string(std::string response);
 private:
 	std::wstring get_auth_data();
-	std::wstring apiKey;
+	std::string apiKey;
 	std::wstring apiUrl;
+};
+
+class SHIPCLOUD_API Config {
+public:
+	Config();
+	virtual ~Config();
+	virtual void read(std::string config_path);
+	virtual std::string get(std::string key);
+protected:
+	modernJson json;
 };

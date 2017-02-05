@@ -17,6 +17,10 @@ Before building the projects check if you have Nuget-Packages for C++ REST SDK i
 
 <img src="https://i.imgsafe.org/6350e72ccf.png" width="850" height="450">
 
+### Configuration
+
+Put your API-key into **config.json** and start the **client.exe**.
+
 ### License 
 
 [MIT](https://github.com/brakmic/shipcloud-cpp/blob/master/LICENSE)

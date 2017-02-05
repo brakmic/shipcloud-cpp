@@ -1,6 +1,7 @@
 // ShipCloud.cpp : Defines the exported functions for the DLL application.
 //
-#include "ShipCloud.h"
+#include "stdafx.h"
+
 // Casablanca C++ SDK namespaces
 using namespace concurrency;
 using namespace concurrency::streams;
@@ -41,7 +42,7 @@ bool _trace(TCHAR *format, ...)
 }
 #endif
 
-ShipCloud::ShipCloud(std::wstring apiKey)
+ShipCloud::ShipCloud(std::string apiKey)
 	: apiKey(std::move(apiKey)),
 	  apiUrl(U("https://api.shipcloud.io"))
 {}

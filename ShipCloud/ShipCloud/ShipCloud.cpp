@@ -144,17 +144,17 @@ types::responses::AddressResponse ShipCloud::parse_address_response(json::value&
 	std::stringstream ss;
 	ss << utility::conversions::to_utf8string(response.serialize());
 	auto p = modernJson::parse(ss);
-	r.id = p.value("id", "");
+	r.id = !p["id"].is_null() ? p.value("id", "") : "";
 	r.care_of = !p["care_of"].is_null() ? p.value("care_of", "") : "";
-	r.company = p.value("company", "");
-	r.first_name = p.value("first_name", "");
-	r.last_name = p.value("last_name", "");
+	r.company = !p["company"].is_null() ? p.value("company", "") : "";
+	r.first_name = !p["first_name"].is_null() ? p.value("first_name", "") : "";
+	r.last_name = !p["last_name"].is_null() ? p.value("last_name", "") : "";
 	r.phone = !p["phone"].is_null() ? p.value("phone", "") : "";
-	r.street = p.value("street", "");
-	r.street_no = p.value("street_no", "");
-	r.city = p.value("city", "");
+	r.street = !p["street"].is_null() ? p.value("street", "") : "";
+	r.street_no = !p["street_no"].is_null() ? p.value("street_no", "") : "";
+	r.city = !p["city"].is_null() ? p.value("city", "") : "";
 	r.state = !p["state"].is_null() ? p.value("state", "") : "";
-	r.zip_code = p.value("zip_code", "");
+	r.zip_code = !p["zip_code"].is_null() ? p.value("zip_code", "") : "";
 	return r;
 }
 

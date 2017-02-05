@@ -3,7 +3,7 @@ namespace shipcloud {
 	namespace api {
 		namespace v1 {
 			namespace types {
-				class Address {
+				class SHIPCLOUD_API Address {
 					public:
 						std::string id;
 						std::string company;

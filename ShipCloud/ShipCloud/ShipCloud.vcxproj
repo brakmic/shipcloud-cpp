@@ -149,6 +149,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="api\base\api-call.h" />
+    <ClInclude Include="api\base\api-config.h" />
+    <ClInclude Include="api\base\app-config.h" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="api\v1\types\address\address.h" />
     <ClInclude Include="api\v1\types\responses\address-response.h" />
     <ClInclude Include="ShipCloud.h" />
@@ -158,7 +162,9 @@
     <ClInclude Include="vendors\json.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="config.cpp" />
+    <ClCompile Include="api-call.cpp" />
+    <ClCompile Include="api-config.cpp" />
+    <ClCompile Include="app-config.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

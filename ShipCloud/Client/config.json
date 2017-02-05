@@ -2,5 +2,21 @@
   "debugMode": true,
   "productionApiKey": "YOUR_PRODUCTION_API_KEY",
   "sandboxApiKey": "YOUR_SANDBOX_API_KEY",
-  "server": "localhost"
+  "server": "localhost",
+  "api": {
+    "server": "api.shipcloud.io",
+    "version": "v1",
+    "endpoints": [
+      "addresses",
+      "shipments",
+      "shipment",
+      "shipment_quotes",
+      "carriers",
+      "rates",
+      "pickup_requests",
+      "webhooks",
+      "trackers"
+    ]
+
+  }
 }

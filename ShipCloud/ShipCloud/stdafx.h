@@ -7,6 +7,18 @@
 
 #include "targetver.h"
 
+// The following ifdef block is the standard way of creating macros which make exporting 
+// from a DLL simpler. All files within this DLL are compiled with the SHIPCLOUD_EXPORTS
+// symbol defined on the command line. This symbol should not be defined on any project
+// that uses this DLL. This way any other project whose source files include this file see 
+// SHIPCLOUD_API functions as being imported from a DLL, whereas this DLL sees symbols
+// defined with this macro as being exported.
+#ifdef SHIPCLOUD_EXPORTS
+#define SHIPCLOUD_API __declspec(dllexport)
+#else
+#define SHIPCLOUD_API __declspec(dllimport)
+#endif
+
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 // Windows Header Files:
 #include <windows.h>
@@ -35,4 +47,7 @@
 // ShipCloud APIs
 #include "api/v1/types/address/address.h"
 #include "api/v1/types/responses/address-response.h"
+#include "api/base/api-call.h"
+#include "api/base/api-config.h"
+#include "api/base/app-config.h"
 #include "ShipCloud.h"

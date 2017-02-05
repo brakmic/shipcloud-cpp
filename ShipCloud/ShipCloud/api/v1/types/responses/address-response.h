@@ -4,7 +4,7 @@ namespace shipcloud {
 		namespace v1 {
 			namespace types {
 				namespace responses {
-					class AddressResponse {
+					class SHIPCLOUD_API AddressResponse {
 						public:
 							std::string id;
 							std::string company;

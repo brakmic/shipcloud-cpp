@@ -4,15 +4,15 @@
 // Casablanca C++ SDK namespaces
 using namespace concurrency;
 using namespace concurrency::streams;
-using namespace utility;				// Common utilities like string conversions
-using namespace web;					// Common features like URIs.
-using namespace web::http;				// Common HTTP functionality
-using namespace web::http::client;		// HTTP client features
-using namespace concurrency::streams;	// Asynchronous streams
-using namespace web::http::experimental::listener;          // HTTP server
-using namespace web::experimental::web_sockets::client;     // WebSockets client
-using namespace web::json;                                  // JSON library
-															// ShipCloud namespaces
+using namespace utility;				
+using namespace web;					
+using namespace web::http;				
+using namespace web::http::client;		
+using namespace concurrency::streams;	
+using namespace web::http::experimental::listener;          
+using namespace web::experimental::web_sockets::client;   
+using namespace web::json;                               
+												
 namespace types = shipcloud::api::v1::types;
 namespace responses = shipcloud::api::v1::types::responses;
 // JSON for Modern C++

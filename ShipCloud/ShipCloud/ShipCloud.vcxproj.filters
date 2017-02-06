@@ -42,9 +42,6 @@
     <ClInclude Include="api\base\api-call.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="api\base\api-config.h">
       <Filter>Header Files</Filter>
     </ClInclude>

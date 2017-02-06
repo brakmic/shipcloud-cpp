@@ -152,7 +152,6 @@
     <ClInclude Include="api\base\api-call.h" />
     <ClInclude Include="api\base\api-config.h" />
     <ClInclude Include="api\base\app-config.h" />
-    <ClInclude Include="debug.h" />
     <ClInclude Include="api\v1\types\address\address.h" />
     <ClInclude Include="api\v1\types\responses\address-response.h" />
     <ClInclude Include="ShipCloud.h" />

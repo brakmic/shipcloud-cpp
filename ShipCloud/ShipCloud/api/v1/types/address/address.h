@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ADDRESS_H__
+#define __ADDRESS_H__
+
 namespace shipcloud {
 	namespace api {
 		namespace v1 {
@@ -32,3 +34,5 @@ namespace shipcloud {
 		}
 	}
 }
+
+#endif // __ADDRESS_H__

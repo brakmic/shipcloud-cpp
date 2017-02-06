@@ -8,22 +8,27 @@
 
 #include "targetver.h"
 
-// The following ifdef block is the standard way of creating macros which make exporting 
-// from a DLL simpler. All files within this DLL are compiled with the SHIPCLOUD_EXPORTS
-// symbol defined on the command line. This symbol should not be defined on any project
-// that uses this DLL. This way any other project whose source files include this file see 
-// SHIPCLOUD_API functions as being imported from a DLL, whereas this DLL sees symbols
-// defined with this macro as being exported.
-#ifdef SHIPCLOUD_EXPORTS
-#define SHIPCLOUD_API __declspec(dllexport)
-#else
-#define SHIPCLOUD_API __declspec(dllimport)
-#endif
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 
-#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-#include <tchar.h>
+	// The following ifdef block is the standard way of creating macros which make exporting 
+	// from a DLL simpler. All files within this DLL are compiled with the SHIPCLOUD_EXPORTS
+	// symbol defined on the command line. This symbol should not be defined on any project
+	// that uses this DLL. This way any other project whose source files include this file see 
+	// SHIPCLOUD_API functions as being imported from a DLL, whereas this DLL sees symbols
+	// defined with this macro as being exported.
+	#ifdef SHIPCLOUD_EXPORTS
+	#define SHIPCLOUD_API __declspec(dllexport)
+	#else
+	#define SHIPCLOUD_API __declspec(dllimport)
+	#endif
+
+	#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+	// Windows Header Files:
+	#include <windows.h>
+	#include <tchar.h>
+
+#endif // _WINDOWS
+
 #include <string>
 #include <iostream>
 #include <sstream>

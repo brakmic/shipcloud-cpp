@@ -22,12 +22,38 @@ ShipCloud::ShipCloud()
 {
 }
 
-ShipCloud::ShipCloud(base::AppConfig& cfg)
-	: cfg(cfg)
+ShipCloud::ShipCloud(base::AppConfig cfg)
+	: cfg(std::move(cfg))
 {}
 
 ShipCloud::~ShipCloud()
 {
+}
+
+ShipCloud::ShipCloud(const ShipCloud& other) {
+	if (&other != this) {
+		this->cfg = other.cfg;
+	}
+}
+
+ShipCloud::ShipCloud(ShipCloud&& other) {
+	if (&other != this) {
+		this->cfg = std::move(other.cfg);
+	}
+}
+
+ShipCloud& ShipCloud::operator=(const ShipCloud& other) {
+	if (&other != this) {
+		this->cfg = other.cfg;
+	}
+	return *this;
+}
+
+ShipCloud& ShipCloud::operator=(ShipCloud&& other) {
+	if (&other != this) {
+		this->cfg = std::move(other.cfg);
+	}
+	return *this;
 }
 /*
 * Send asynchronous POST request to create a new Address

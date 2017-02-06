@@ -12,12 +12,12 @@ using modernJson = nlohmann::json;
 class SHIPCLOUD_API ShipCloud {
 public:
 	ShipCloud();
-	ShipCloud(base::AppConfig& cfg);
+	ShipCloud(base::AppConfig cfg);
 	virtual ~ShipCloud();
-	ShipCloud(const ShipCloud& other) = delete;
-	ShipCloud(ShipCloud&& other) = delete;
-	ShipCloud& operator=(const ShipCloud& other) = delete;
-	ShipCloud& operator=(ShipCloud&& other) = delete;
+	ShipCloud(const ShipCloud& other);
+	ShipCloud(ShipCloud&& other);
+	ShipCloud& operator=(const ShipCloud& other);
+	ShipCloud& operator=(ShipCloud&& other);
 	pplx::task<responses::AddressResponse> createAddress(types::Address& address);
 	pplx::task<std::vector<responses::AddressResponse>> readAllAddresses();
 	std::wstring ShipCloud::get_auth_data();

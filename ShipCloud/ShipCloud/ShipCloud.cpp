@@ -80,9 +80,7 @@ pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses(
 		auto p = modernJson::parse(ss);
 		std::vector<responses::AddressResponse> vec;
 		for (auto& v : p.front()) {
-			auto str = v.dump();
-			auto a = ShipCloud::parse_address_string(str);
-			vec.push_back(std::move(a));
+			vec.emplace_back(ShipCloud::parse_address_string(v.dump()));
 		}
 		return vec;
 	});;

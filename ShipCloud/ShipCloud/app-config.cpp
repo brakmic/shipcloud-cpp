@@ -2,8 +2,8 @@
 namespace shipcloud {
 	namespace api {
 		namespace base {
-			AppConfig::AppConfig(std::wstring config_path)
-				: config_path(std::move(config_path))
+			AppConfig::AppConfig(std::wstring configPath)
+				: configPath(std::move(configPath))
 			{
 				this->read();
 			}
@@ -15,27 +15,30 @@ namespace shipcloud {
 			AppConfig::AppConfig(const AppConfig & other)
 			{
 				if (&other != this) {
-					this->config_path = other.config_path;
+					this->configPath = other.configPath;
 					this->json = other.json;
 					this->apiCfg = other.apiCfg;
+					this->serverUrl = other.serverUrl;
 				}
 			}
 
 			AppConfig::AppConfig(AppConfig && other)
 			{
 				if (&other != this) {
-					this->config_path = std::move(other.config_path);
+					this->configPath = std::move(other.configPath);
 					this->json = std::move(other.json);
 					this->apiCfg = std::move(other.apiCfg);
+					this->serverUrl = std::move(other.serverUrl);
 				}
 			}
 
 			AppConfig& AppConfig::operator=(const AppConfig & other)
 			{
 				if (&other != this) {
-					this->config_path = other.config_path;
+					this->configPath = other.configPath;
 					this->json = other.json;
 					this->apiCfg = other.apiCfg;
+					this->serverUrl = other.serverUrl;
 				}
 				return *this;
 			}
@@ -43,15 +46,16 @@ namespace shipcloud {
 			AppConfig& AppConfig::operator=(AppConfig && other)
 			{
 				if (&other != this) {
-					this->config_path = std::move(other.config_path);
+					this->configPath = std::move(other.configPath);
 					this->json = std::move(other.json);
 					this->apiCfg = std::move(other.apiCfg);
+					this->serverUrl = std::move(other.serverUrl);
 				}
 				return *this;
 			}
 
 			void AppConfig::read() {
-				std::ifstream i(this->config_path);
+				std::ifstream i(this->configPath);
 				i >> this->json;
 				this->init();
 			}
@@ -68,32 +72,30 @@ namespace shipcloud {
 				}
 				return this->json.value(key, std::string());
 			}
-			std::string AppConfig::getServerUrl()
+			std::string& AppConfig::getServerUrl()
 			{
-				auto api = this->json.find("api");
-				auto dump = api.value().dump();
-				std::stringstream ss;
-				ss << dump;
-				auto json = modernJson::parse(ss);
-				auto serverUrl = json.value("server", std::string());
-				std::stringstream ss2;
-				ss2 << "https://" << serverUrl;
-				return ss2.str();
+				return this->serverUrl;
 			}
 			void AppConfig::init()
 			{
 				this->apiCfg.setSandboxKey(this->get("sandboxApiKey"));
 				this->apiCfg.setProductionKey(this->get("productionApiKey"));
 				this->apiCfg.setDebug(this->get("debugMode") == "true" ? true : false);
-				this->initApiCalls();
+
+				auto apiJson = this->json.find("api");
+				auto dump = apiJson.value().dump();
+				std::stringstream ss;
+				ss << dump;
+
+				auto json = modernJson::parse(ss);
+				auto serverUrl = json.value("server", std::string());
+				this->serverUrl = "https://" + serverUrl;
+
+				this->initApiCalls(json);
 			}
 
-			void AppConfig::initApiCalls()
+			void AppConfig::initApiCalls(modernJson& json)
 			{
-				auto api = this->get("api");
-				std::stringstream ss;
-				ss << api;
-				auto json = modernJson::parse(ss);
 				auto endpoints = json.value("endpoints", std::vector<std::string>());
 				auto server = json.value("server", std::string());
 				auto version = json.value("version", std::string());

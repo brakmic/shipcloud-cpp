@@ -1,12 +1,6 @@
 #include "stdafx.h"
 namespace base = shipcloud::api::base;
 
-base::ApiConfig::ApiConfig()
-	: debug(true)
-{
-
-}
-
 base::ApiConfig::~ApiConfig()
 {
 	this->calls.clear();

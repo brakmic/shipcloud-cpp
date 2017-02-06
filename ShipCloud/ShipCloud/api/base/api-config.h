@@ -6,7 +6,7 @@ namespace shipcloud {
 		namespace base {
 			class SHIPCLOUD_API ApiConfig {
 			public:
-				ApiConfig();
+				ApiConfig() = default;
 				~ApiConfig();
 				ApiConfig(const ApiConfig& other);
 				ApiConfig(ApiConfig&& other);
@@ -20,9 +20,9 @@ namespace shipcloud {
 				std::map<std::string, ApiCall>& getApiCalls();
 				ApiCall& getApiCall(std::string& name);
 			protected:
+				bool debug = true;
 				std::string sandboxApiKey;
 				std::string productionApiKey;
-				bool debug;
 				std::map<std::string, ApiCall> calls;
 			};
 		}

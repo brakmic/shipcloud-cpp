@@ -6,7 +6,7 @@ namespace shipcloud {
 		namespace base {
 			class SHIPCLOUD_API ApiCall {
 			public:
-				ApiCall();
+				ApiCall() = default;
 				ApiCall(std::wstring version, std::wstring server);
 				virtual ~ApiCall();
 				ApiCall(const ApiCall& other);

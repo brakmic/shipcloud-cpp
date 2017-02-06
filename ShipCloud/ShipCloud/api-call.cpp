@@ -3,11 +3,6 @@ namespace shipcloud {
 	namespace api {
 		namespace base {
 
-			ApiCall::ApiCall()
-			{
-
-			}
-
 			ApiCall::ApiCall(std::wstring version, std::wstring server)
 				: version(version),
 				server(server)

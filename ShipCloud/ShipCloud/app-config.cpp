@@ -2,9 +2,6 @@
 namespace shipcloud {
 	namespace api {
 		namespace base {
-			AppConfig::AppConfig()
-			{
-			}
 			AppConfig::AppConfig(std::wstring config_path)
 				: config_path(std::move(config_path))
 			{

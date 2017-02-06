@@ -80,7 +80,7 @@ std::map<std::string, base::ApiCall>& base::ApiConfig::getApiCalls()
 	return this->calls;
 }
 
-base::ApiCall& base::ApiConfig::getApiCall(std::string name)
+base::ApiCall& base::ApiConfig::getApiCall(std::string& name)
 {
 	return this->calls[name];
 }

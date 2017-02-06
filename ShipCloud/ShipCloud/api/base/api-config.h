@@ -18,7 +18,7 @@ namespace shipcloud {
 				void setDebug(bool val);
 				bool isDebug();
 				std::map<std::string, ApiCall>& getApiCalls();
-				ApiCall& getApiCall(std::string name);
+				ApiCall& getApiCall(std::string& name);
 			protected:
 				std::string sandboxApiKey;
 				std::string productionApiKey;

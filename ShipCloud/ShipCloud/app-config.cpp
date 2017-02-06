@@ -10,8 +10,8 @@ namespace shipcloud {
 			{
 				this->read();
 			}
-			AppConfig::AppConfig(std::wstring& config_path)
-				: config_path(config_path)
+			AppConfig::AppConfig(std::wstring config_path)
+				: config_path(std::move(config_path))
 			{
 				this->read();
 			}

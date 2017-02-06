@@ -35,7 +35,7 @@ ShipCloud::~ShipCloud()
 pplx::task<responses::AddressResponse> ShipCloud::createAddress(types::Address& address) {
 	std::wstring endpoint(L"addresses");
 	std::wstring mime(L"application/json");
-	auto req = this->createPostRequest(endpoint, this->cfg.apiCfg.getApiCall("addresses"), 
+	auto req = this->createPostRequest(endpoint, this->cfg.apiCfg.getApiCall(conversions::to_utf8string("addresses")),
 									   this->get_auth_data(), mime,
 									   this->address_to_string(address));
 
@@ -60,7 +60,7 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(types::Address& 
 pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses() {
 	std::wstring endpoint(L"addresses");
 	std::wstring mime(L"application/json");
-	auto req = this->createGetRequest(endpoint, this->cfg.apiCfg.getApiCall("addresses"), 
+	auto req = this->createGetRequest(endpoint, this->cfg.apiCfg.getApiCall(conversions::to_utf8string("addresses")), 
 									  this->get_auth_data(), mime);
 	
 	uri _uri(conversions::to_string_t(this->cfg.getServerUrl()));

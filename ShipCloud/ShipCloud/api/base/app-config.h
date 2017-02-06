@@ -10,7 +10,7 @@ namespace shipcloud {
 			class SHIPCLOUD_API AppConfig {
 			public:
 				AppConfig();
-				explicit AppConfig(std::wstring& config_path);
+				explicit AppConfig(std::wstring config_path);
 				explicit AppConfig(wchar_t* config_path);
 				virtual ~AppConfig();
 				AppConfig(const AppConfig& other);

@@ -1,11 +1,11 @@
-## ShipCloud C++ Binding
+## ShipCloud Bindings for C++
 
 This repo contains a Visual C++ Solution with two projects:
 
 * ShipCloud [DLL](https://github.com/brakmic/shipcloud-cpp/tree/master/ShipCloud/ShipCloud)
 * Console-based [Client](https://github.com/brakmic/shipcloud-cpp/tree/master/ShipCloud/Client)
 
-However, please, consider this code as **pre-alpha**. For a similar and more complete (JavaScript) version check out this [this project](https://github.com/brakmic/shipcloud-js).
+However, please, consider this code as **pre-alpha**. For a similar and more complete (JavaScript) version check out [this project](https://github.com/brakmic/shipcloud-js).
 The code in this solution utilizes some nice C++14 features and relies upon these great libraries: 
 
 * [C++ REST SDK](https://github.com/Microsoft/cpprestsdk) a.k.a. **Casablanca**

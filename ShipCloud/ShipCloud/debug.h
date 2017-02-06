@@ -1,4 +1,8 @@
-#pragma once
+#ifndef __DEBUG_H__
+#define __DEBUG_H__
+
+#include <windows.h>
+#include <tchar.h>
 //a simple Tracer
 #ifdef ENABLE_TRACE
 bool _trace(TCHAR *format, ...)
@@ -21,3 +25,5 @@ bool _trace(TCHAR *format, ...)
 	return true;
 }
 #endif
+
+#endif // __DEBUG_H__

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __API_CALL_H__
+#define __API_CALL_H__
+
 namespace shipcloud {
 	namespace api {
 		namespace base {
@@ -17,3 +19,4 @@ namespace shipcloud {
 		}
 	}
 }
+#endif // __API_CALL_H__

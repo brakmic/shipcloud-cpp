@@ -1,3 +1,6 @@
+#ifndef __SHIPCLOUD_H__
+#define __SHIPCLOUD_H__
+
 namespace api = shipcloud::api::v1;
 namespace base = shipcloud::api::base;
 namespace types = shipcloud::api::v1::types;
@@ -30,3 +33,5 @@ public:
 private:
 	base::AppConfig cfg;
 };
+
+#endif // __SHIPCLOUD_H__

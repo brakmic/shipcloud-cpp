@@ -3,7 +3,8 @@
 // are changed infrequently
 //
 
-#pragma once
+#ifndef __STDAFX_H__
+#define __STDAFX_H__
 
 #include "targetver.h"
 
@@ -51,3 +52,6 @@
 #include "api/base/api-config.h"
 #include "api/base/app-config.h"
 #include "ShipCloud.h"
+
+
+#endif // __STDAFX_H__

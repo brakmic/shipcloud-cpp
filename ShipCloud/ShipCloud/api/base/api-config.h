@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __API_CONFIG_H__
+#define __API_CONFIG_H__
+
 namespace shipcloud {
 	namespace api {
 		namespace base {
@@ -26,3 +28,4 @@ namespace shipcloud {
 		}
 	}
 }
+#endif // __API_CONFIG_H__

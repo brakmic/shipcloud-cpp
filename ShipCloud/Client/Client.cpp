@@ -32,7 +32,7 @@ int main()
 	// The ShipCloud API class will automatically select the right key depending on your debugMode settings.
 	
 	// initialize ShipCloud API
-	auto shipCloud = std::unique_ptr<ShipCloud>(new ShipCloud(cfg));
+	ShipCloud shipCloud(cfg);
 	
 	// create a test address
 	//auto adr = getDummyAddress();
@@ -43,7 +43,7 @@ int main()
 	}).wait();*/
 	
 	// get all addresses
-	shipCloud->readAllAddresses().then([=](std::vector<types::responses::AddressResponse> addresses) -> void {
+	shipCloud.readAllAddresses().then([=](std::vector<types::responses::AddressResponse> addresses) -> void {
 		for (auto& a : addresses) {
 			std::cout << a.to_string() << "\r\n";
 		}

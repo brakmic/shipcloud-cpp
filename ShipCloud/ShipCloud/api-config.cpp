@@ -44,17 +44,17 @@ base::ApiConfig & base::ApiConfig::operator=(ApiConfig && other)
 	return *this;
 }
 
-std::string base::ApiConfig::getApiKey()
+const std::string base::ApiConfig::getApiKey()
 {
 	return this->debug ? this->sandboxApiKey : this->productionApiKey;
 }
 
-void base::ApiConfig::setSandboxKey(std::string& key)
+void base::ApiConfig::setSandboxKey(const std::string& key)
 {
 	this->sandboxApiKey = key;
 }
 
-void base::ApiConfig::setProductionKey(std::string& key)
+void base::ApiConfig::setProductionKey(const std::string& key)
 {
 	this->productionApiKey = key;
 }
@@ -74,7 +74,7 @@ std::map<std::string, base::ApiCall>& base::ApiConfig::getApiCalls()
 	return this->calls;
 }
 
-base::ApiCall& base::ApiConfig::getApiCall(std::string& name)
+base::ApiCall base::ApiConfig::getApiCall(const std::string name)
 {
-	return this->calls[name];
+	return this->calls[std::move(name)];
 }

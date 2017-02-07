@@ -16,8 +16,8 @@ namespace shipcloud {
 				AppConfig(AppConfig&& other);
 				AppConfig& operator=(const AppConfig& other);
 				AppConfig& operator=(AppConfig&& other);
-				virtual std::string get(std::string key);
-				virtual std::string& getServerUrl();
+				virtual const std::string get(std::string key);
+				virtual const std::string& getServerUrl();
 				api::base::ApiConfig apiCfg;
 				modernJson json;
 				std::wstring configPath;

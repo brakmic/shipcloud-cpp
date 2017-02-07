@@ -23,7 +23,7 @@ std::unique_ptr<api::types::Address> getDummyAddress() {
 int main()
 {
 	// load app settings
-	base::AppConfig cfg(L"config.json");
+	const base::AppConfig cfg(L"config.json");
 	
 	// your API key must be located in config.json (register here for a free version: https://developers.shipcloud.io/)
 	// There are two keys available: sandbox & production. 

@@ -59,7 +59,7 @@ namespace shipcloud {
 				i >> this->json;
 				this->init();
 			}
-			std::string AppConfig::get(std::string key) {
+			const std::string AppConfig::get(std::string key) {
 				if (!this->json[key].is_null()) {
 					if (this->json[key].is_object()) {
 						auto obj = this->json.find(key);
@@ -72,7 +72,7 @@ namespace shipcloud {
 				}
 				return this->json.value(key, std::string());
 			}
-			std::string& AppConfig::getServerUrl()
+			const std::string& AppConfig::getServerUrl()
 			{
 				return this->serverUrl;
 			}

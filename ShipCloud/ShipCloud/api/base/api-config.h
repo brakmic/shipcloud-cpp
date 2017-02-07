@@ -12,13 +12,13 @@ namespace shipcloud {
 				ApiConfig(ApiConfig&& other);
 				ApiConfig& operator=(const ApiConfig& other);
 				ApiConfig& operator=(ApiConfig&& other);
-				std::string getApiKey();
-				void setSandboxKey(std::string& key);
-				void setProductionKey(std::string& key);
+				const std::string getApiKey();
+				void setSandboxKey(const std::string& key);
+				void setProductionKey(const std::string& key);
 				void setDebug(bool val);
 				bool isDebug();
 				std::map<std::string, ApiCall>& getApiCalls();
-				ApiCall& getApiCall(std::string& name);
+				ApiCall getApiCall(const std::string name);
 			protected:
 				bool debug = true;
 				std::string sandboxApiKey;

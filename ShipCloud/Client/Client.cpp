@@ -38,7 +38,7 @@ int main()
 	//auto adr = getDummyAddress();
 
 	// use async method `createAddress` to send a POST request containing above address
-	/*shipCloud->createAddress(*adr).then([=](types::responses::AddressResponse& response) -> void {
+	/*shipCloud.createAddress(*adr).then([=](types::responses::AddressResponse& response) -> void {
 		std::cout << "Response: " << response.to_string() << "\r\n";
 	}).wait();*/
 	

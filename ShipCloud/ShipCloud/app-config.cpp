@@ -76,6 +76,7 @@ namespace shipcloud {
 			{
 				return this->serverUrl;
 			}
+
 			void AppConfig::init()
 			{
 				this->apiCfg.setSandboxKey(this->get("sandboxApiKey"));

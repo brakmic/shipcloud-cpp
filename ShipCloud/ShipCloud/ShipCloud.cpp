@@ -74,7 +74,7 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Add
 		    return response.extract_json();
 		}
 		return pplx::task_from_result(json::value(U("error")));
-	}).then([=](json::value json) -> responses::AddressResponse {
+	}).then([](json::value json) -> responses::AddressResponse {
 		return ShipCloud::parse_address_response(json);
 	});;
 }
@@ -98,7 +98,7 @@ pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses(
 			return response.extract_json();
 		}
 		return pplx::task_from_result(json::value(U("error")));
-	}).then([=](json::value json) -> std::vector<responses::AddressResponse> {
+	}).then([](json::value json) -> std::vector<responses::AddressResponse> {
 		std::stringstream ss;
 		auto s = json.serialize();
 		ss << utility::conversions::to_utf8string(json.serialize());

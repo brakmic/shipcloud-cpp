@@ -2,7 +2,7 @@
 namespace shipcloud {
 	namespace api {
 		namespace base {
-			AppConfig::AppConfig(std::wstring configPath)
+			AppConfig::AppConfig(const std::wstring configPath)
 				: configPath(std::move(configPath))
 			{
 				this->read();
@@ -12,7 +12,7 @@ namespace shipcloud {
 			{
 			}
 
-			AppConfig::AppConfig(const AppConfig & other)
+			AppConfig::AppConfig(const AppConfig& other)
 			{
 				if (&other != this) {
 					this->configPath = other.configPath;
@@ -22,7 +22,7 @@ namespace shipcloud {
 				}
 			}
 
-			AppConfig::AppConfig(AppConfig && other)
+			AppConfig::AppConfig(AppConfig&& other)
 			{
 				if (&other != this) {
 					this->configPath = std::move(other.configPath);
@@ -32,7 +32,7 @@ namespace shipcloud {
 				}
 			}
 
-			AppConfig& AppConfig::operator=(const AppConfig & other)
+			AppConfig& AppConfig::operator=(const AppConfig& other)
 			{
 				if (&other != this) {
 					this->configPath = other.configPath;
@@ -43,7 +43,7 @@ namespace shipcloud {
 				return *this;
 			}
 
-			AppConfig& AppConfig::operator=(AppConfig && other)
+			AppConfig& AppConfig::operator=(AppConfig&& other)
 			{
 				if (&other != this) {
 					this->configPath = std::move(other.configPath);
@@ -59,7 +59,7 @@ namespace shipcloud {
 				i >> this->json;
 				this->init();
 			}
-			const std::string AppConfig::get(std::string key) {
+			const std::string AppConfig::get(const std::string& key) {
 				if (!this->json[key].is_null()) {
 					if (this->json[key].is_object()) {
 						auto obj = this->json.find(key);
@@ -72,7 +72,7 @@ namespace shipcloud {
 				}
 				return this->json.value(key, std::string());
 			}
-			const std::string& AppConfig::getServerUrl()
+			const std::string AppConfig::getServerUrl()
 			{
 				return this->serverUrl;
 			}
@@ -103,7 +103,8 @@ namespace shipcloud {
 				for (const auto& e : endpoints) {
 					std::pair<std::string, ApiCall> entry;
 					entry.first = e;
-					entry.second = ApiCall(utility::conversions::to_utf16string(version), utility::conversions::to_utf16string(server));
+					entry.second = ApiCall(utility::conversions::to_utf16string(version), 
+										   utility::conversions::to_utf16string(server));
 					this->apiCfg.getApiCalls().insert(entry);
 				}
 			}

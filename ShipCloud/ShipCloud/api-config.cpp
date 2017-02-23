@@ -24,7 +24,7 @@ base::ApiConfig::ApiConfig(const ApiConfig& other)
 	}
 }
 
-base::ApiConfig & base::ApiConfig::operator=(const ApiConfig & other)
+base::ApiConfig& base::ApiConfig::operator=(const ApiConfig & other)
 {
 	if (&other != this) {
 		this->calls = other.calls;
@@ -34,7 +34,7 @@ base::ApiConfig & base::ApiConfig::operator=(const ApiConfig & other)
 	return *this;
 }
 
-base::ApiConfig & base::ApiConfig::operator=(ApiConfig && other)
+base::ApiConfig& base::ApiConfig::operator=(ApiConfig && other)
 {
 	if (&other != this) {
 		this->calls = std::move(other.calls);
@@ -74,7 +74,7 @@ std::map<std::string, base::ApiCall>& base::ApiConfig::getApiCalls()
 	return this->calls;
 }
 
-base::ApiCall base::ApiConfig::getApiCall(const std::string name)
+const base::ApiCall base::ApiConfig::getApiCall(const std::string& name)
 {
-	return this->calls[std::move(name)];
+	return this->calls[name];
 }

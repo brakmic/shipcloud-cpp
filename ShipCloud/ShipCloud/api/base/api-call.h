@@ -13,8 +13,11 @@ namespace shipcloud {
 				ApiCall(ApiCall&& other);
 				ApiCall& operator=(const ApiCall& other);
 				ApiCall& operator=(ApiCall&& other);
-				std::wstring version;
-				std::wstring server;
+				std::wstring version() const;
+				std::wstring server() const;
+			protected:
+				mutable std::wstring version_;
+				mutable std::wstring server_;
 			};
 		}
 	}

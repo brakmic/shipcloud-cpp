@@ -51,6 +51,7 @@
 #include <cpprest/rawptrstream.h>               // Async streams backed by raw pointer to memory
 #include <cpprest/producerconsumerstream.h>     // Async streams for producer consumer scenarios
 // ShipCloud APIs
+#include "api/helpers/string-helper.h"
 #include "api/v1/types/address/address.h"
 #include "api/v1/types/responses/address-response.h"
 #include "api/base/api-call.h"

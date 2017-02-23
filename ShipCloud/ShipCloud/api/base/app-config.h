@@ -16,16 +16,20 @@ namespace shipcloud {
 				AppConfig(AppConfig&& other);
 				AppConfig& operator=(const AppConfig& other);
 				AppConfig& operator=(AppConfig&& other);
-				virtual const std::string get(const std::string& key);
-				virtual const std::string getServerUrl();
-				mutable api::base::ApiConfig apiCfg;
-				mutable modernJson json;
-				mutable std::wstring configPath;
+				virtual const std::wstring get(const std::wstring& key);
+				std::wstring serverUrl() const;
+				api::base::ApiConfig apiConfig() const;
+				modernJson json() const;
+				std::wstring configPath() const;
 			protected:
-				std::string serverUrl;
-				void read();
-				void init();
-				void initApiCalls(modernJson& json);
+				mutable std::wstring configPath_;
+				mutable std::wstring serverUrl_;
+				mutable api::base::ApiConfig apiCfg_;
+				mutable modernJson json_;
+
+				virtual void initApiCalls(modernJson& json);
+				virtual void read();
+				virtual void init();
 			};
 		}
 	}

@@ -1,15 +1,16 @@
 #include "stdafx.h"
 namespace base = shipcloud::api::base;
+using namespace utility;
 
 base::ApiConfig::~ApiConfig()
 {
-	this->calls.clear();
+	this->calls_.clear();
 }
 
 base::ApiConfig::ApiConfig(ApiConfig&& other)
 {
 	if (&other != this) {
-		this->calls = std::move(other.calls);
+		this->calls_ = std::move(other.calls_);
 		this->productionApiKey = std::move(other.productionApiKey);
 		this->sandboxApiKey = std::move(other.sandboxApiKey);
 	}
@@ -18,7 +19,7 @@ base::ApiConfig::ApiConfig(ApiConfig&& other)
 base::ApiConfig::ApiConfig(const ApiConfig& other)
 {
 	if (&other != this) {
-		this->calls = other.calls;
+		this->calls_ = other.calls_;
 		this->productionApiKey = other.productionApiKey;
 		this->sandboxApiKey = other.sandboxApiKey;
 	}
@@ -27,7 +28,7 @@ base::ApiConfig::ApiConfig(const ApiConfig& other)
 base::ApiConfig& base::ApiConfig::operator=(const ApiConfig & other)
 {
 	if (&other != this) {
-		this->calls = other.calls;
+		this->calls_ = other.calls_;
 		this->productionApiKey = other.productionApiKey;
 		this->sandboxApiKey = other.sandboxApiKey;
 	}
@@ -37,24 +38,24 @@ base::ApiConfig& base::ApiConfig::operator=(const ApiConfig & other)
 base::ApiConfig& base::ApiConfig::operator=(ApiConfig && other)
 {
 	if (&other != this) {
-		this->calls = std::move(other.calls);
+		this->calls_ = std::move(other.calls_);
 		this->productionApiKey = std::move(other.productionApiKey);
 		this->sandboxApiKey = std::move(other.sandboxApiKey);
 	}
 	return *this;
 }
 
-const std::string base::ApiConfig::getApiKey()
+std::wstring base::ApiConfig::activeApiKey() const
 {
 	return this->debug ? this->sandboxApiKey : this->productionApiKey;
 }
 
-void base::ApiConfig::setSandboxKey(const std::string& key)
+void base::ApiConfig::setSandboxKey(const std::wstring& key)
 {
 	this->sandboxApiKey = key;
 }
 
-void base::ApiConfig::setProductionKey(const std::string& key)
+void base::ApiConfig::setProductionKey(const std::wstring& key)
 {
 	this->productionApiKey = key;
 }
@@ -69,12 +70,12 @@ bool base::ApiConfig::isDebug()
 	return this->debug;
 }
 
-std::map<std::string, base::ApiCall>& base::ApiConfig::getApiCalls()
+std::map<std::wstring, base::ApiCall>& base::ApiConfig::apiCalls() const
 {
-	return this->calls;
+	return this->calls_;
 }
 
-const base::ApiCall base::ApiConfig::getApiCall(const std::string& name)
+const base::ApiCall base::ApiConfig::apiCall(const std::wstring& name) const
 {
-	return this->calls[name];
+	return this->calls_[name];
 }

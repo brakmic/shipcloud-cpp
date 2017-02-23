@@ -4,8 +4,8 @@ namespace shipcloud {
 		namespace base {
 
 			ApiCall::ApiCall(std::wstring version, std::wstring server)
-				: version(version),
-				server(server)
+				: version_(std::move(version)),
+				server_(std::move(server))
 			{
 			}
 
@@ -15,14 +15,14 @@ namespace shipcloud {
 
 			ApiCall::ApiCall(const ApiCall& other)
 
-				: version(other.version),
-				server(other.server)
+				: version_(other.version_),
+				server_(other.server_)
 			{
 			}
 
 			ApiCall::ApiCall(ApiCall&& other)
-				: version(std::move(other.version)),
-				server(std::move(other.server))
+				: version_(std::move(other.version_)),
+				server_(std::move(other.server_))
 			{
 			}
 
@@ -30,8 +30,8 @@ namespace shipcloud {
 			ApiCall& ApiCall::operator=(const ApiCall& other)
 			{
 				if (&other != this) {
-					this->version = other.version;
-					this->server = other.server;
+					this->version_ = other.version_;
+					this->server_ = other.server_;
 				}
 				return *this;
 			}
@@ -39,10 +39,20 @@ namespace shipcloud {
 			ApiCall& ApiCall::operator=(ApiCall&& other)
 			{
 				if (&other != this) {
-					this->version = std::move(other.version);
-					this->server = std::move(other.server);
+					this->version_ = std::move(other.version_);
+					this->server_ = std::move(other.server_);
 				}
 				return *this;
+			}
+
+			std::wstring ApiCall::version() const
+			{
+				return this->version_;
+			}
+
+			std::wstring ApiCall::server() const
+			{
+				return this->server_;
 			}
 
 		}

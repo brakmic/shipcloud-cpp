@@ -23,19 +23,19 @@ public:
 	ShipCloud& operator=(ShipCloud&& other);
 	pplx::task<responses::AddressResponse> createAddress(const types::Address& address);
 	pplx::task<std::vector<responses::AddressResponse>> readAllAddresses();
-	const std::wstring ShipCloud::get_auth_data();
+	const std::wstring ShipCloud::getAuthData();
 	const std::wstring composeApiCallUrl(const std::wstring callName);
 	// static
-	static const std::string address_to_string(const types::Address& address);
-	static const responses::AddressResponse parse_address_response(const json::value& response);
-	static const responses::AddressResponse parse_address_string(const std::string& response);
+	static const std::wstring addressToString(const types::Address& address);
+	static const responses::AddressResponse parseAddressResponse(const json::value& response);
+	static const responses::AddressResponse parseAddressString(const std::wstring& response);
 	static http_request createGetRequest(const std::wstring& endpoint, const base::ApiCall& call, 
 											   const std::wstring& authData, const std::wstring& contentType);
 	static http_request createPostRequest(const std::wstring& endpoint, const base::ApiCall& call, 
 												const std::wstring& authData, const std::wstring& contentType, 
-												const std::string& data);
+												const std::wstring& data);
 private:
-	base::AppConfig cfg;
+	mutable base::AppConfig cfg;
 };
 
 #endif // __SHIPCLOUD_H__

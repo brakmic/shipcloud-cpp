@@ -13,6 +13,7 @@ using namespace web::experimental::web_sockets::client;
 // ShipCloud API												
 namespace types = shipcloud::api::v1::types;
 namespace responses = shipcloud::api::v1::types::responses;
+namespace helpers = shipcloud::api::helpers;
 // JSON for Modern C++
 using modernJson = nlohmann::json;
 
@@ -59,11 +60,11 @@ ShipCloud& ShipCloud::operator=(ShipCloud&& other) {
 */
 pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Address& address) {
 	auto req = this->createPostRequest(U("addresses"),
-									   this->cfg.apiCfg.getApiCall("addresses"),
-									   this->get_auth_data(), U("application/json"),
-									   this->address_to_string(address));
+									   this->cfg.apiConfig().apiCall(U("addresses")),
+									   this->getAuthData(), U("application/json"),
+									   this->addressToString(address));
 
-	uri _uri(conversions::to_string_t(std::move(this->cfg.getServerUrl())));
+	uri _uri(std::move(this->cfg.serverUrl()));
 	http_client client(_uri);
 	
 	return client.request(req).then([=](http_response response) -> pplx::task<json::value>
@@ -83,10 +84,10 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Add
 */
 pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses() {
 	auto req = this->createGetRequest(U("addresses"), 
-									  this->cfg.apiCfg.getApiCall("addresses"), 
-									  this->get_auth_data(), U("application/json"));
+									  this->cfg.apiConfig().apiCall(U("addresses")), 
+									  this->getAuthData(), U("application/json"));
 	
-	uri _uri(conversions::to_string_t(this->cfg.getServerUrl()));
+	uri _uri(this->cfg.serverUrl());
 	http_client client(_uri);
 
 	return client.request(req).then([=](http_response response) -> pplx::task<json::value>
@@ -103,7 +104,7 @@ pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses(
 		auto p = modernJson::parse(ss);
 		std::vector<responses::AddressResponse> vec;
 		for (auto& v : p.front()) {
-			vec.emplace_back(ShipCloud::parse_address_string(v.dump()));
+			vec.emplace_back(ShipCloud::parse_address_string(helpers::StringHelper::to_wstring(v.dump())));
 		}
 		return vec;
 	});;
@@ -112,7 +113,7 @@ pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses(
 /*
 * Convert Address into a JSON
 */
-const std::string ShipCloud::address_to_string(const types::Address& address)
+const std::wstring ShipCloud::addressToString(const types::Address& address)
 {
 	modernJson j;
 	j["id"] = address.id;
@@ -128,27 +129,27 @@ const std::string ShipCloud::address_to_string(const types::Address& address)
 	j["country"] = address.country;
 	j["phone"] = address.phone;
 	
-	return j.dump();
+	return helpers::StringHelper::to_wstring(j.dump());
 }
 
-const types::responses::AddressResponse ShipCloud::parse_address_string(const std::string& response) {
+const types::responses::AddressResponse ShipCloud::parseAddressString(const std::wstring& response) {
 	std::stringstream ss;
-	ss << response;
+	ss << helpers::StringHelper::to_string(response);
 	auto val = json::value::parse(ss);
-	return ShipCloud::parse_address_response(val);
+	return ShipCloud::parseAddressResponse(val);
 }
 const std::wstring ShipCloud::composeApiCallUrl(const std::wstring callName)
 {	
-	auto version = this->cfg.apiCfg.getApiCalls()[conversions::to_utf8string(callName)].version;
+	auto version = this->cfg.apiConfig().apiCalls()[callName].version();
 	std::wstringstream ss;
-	ss << "/" << version << "/" << callName;
+	ss << U("/") << version << U("/") << callName;
 
 	return ss.str();
 }
 /*
 * Convert JSON response into AddressResponse
 */
-const types::responses::AddressResponse ShipCloud::parse_address_response(const json::value& response)
+const types::responses::AddressResponse ShipCloud::parseAddressResponse(const json::value& response)
 {
 	responses::AddressResponse r;
 	std::stringstream ss;
@@ -177,14 +178,14 @@ const types::responses::AddressResponse ShipCloud::parse_address_response(const 
 /*
 * Convert authorization data into base64 string
 */
-const std::wstring ShipCloud::get_auth_data()
+const std::wstring ShipCloud::getAuthData()
 {
-	auto strKey = conversions::to_utf8string(this->cfg.apiCfg.getApiKey());
+	auto strKey = conversions::to_utf8string(this->cfg.apiConfig().activeApiKey());
 	const std::vector<uint8_t> data(strKey.begin(), strKey.end());
 	auto base64Key = conversions::to_base64(data);
 
 	std::wstringstream ss;
-	ss << L"Basic " << conversions::to_string_t(base64Key);
+	ss << U("Basic ") << conversions::to_string_t(base64Key);
 
 	return ss.str();
 }
@@ -192,7 +193,7 @@ const std::wstring ShipCloud::get_auth_data()
 http_request ShipCloud::createGetRequest(const std::wstring& endpoint, const base::ApiCall& call, 
 										 const std::wstring& authData, const std::wstring& contentType) {
 	std::wstringstream ss;
-	ss << U("/") << call.version << U("/") << endpoint;
+	ss << U("/") << call.version() << U("/") << endpoint;
 
 	http_request req(methods::GET);
 	req.headers().add(U("Authorization"), authData);
@@ -204,9 +205,9 @@ http_request ShipCloud::createGetRequest(const std::wstring& endpoint, const bas
 
 http_request ShipCloud::createPostRequest(const std::wstring& endpoint, const base::ApiCall& call, 
 										  const std::wstring& authData, const std::wstring& contentType, 
-										  const std::string& data) {
+										  const std::wstring& data) {
 	std::wstringstream ss;
-	ss << U("/") << call.version << U("/") << endpoint;
+	ss << U("/") << call.version() << U("/") << endpoint;
 
 	http_request req(methods::POST);
 	req.headers().add(U("Authorization"), authData);

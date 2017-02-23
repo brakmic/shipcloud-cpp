@@ -4,8 +4,8 @@ namespace shipcloud {
 		namespace helpers {
 			class StringHelper {
 			public:
-				static std::string to_string(std::wstring wstr);
-				static std::wstring to_wstring(std::string str);
+				static const std::string to_string(const std::wstring& wstr);
+				static const std::wstring to_wstring(const std::string& str);
 			};
 		}
 	}

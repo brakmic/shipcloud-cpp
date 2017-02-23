@@ -1,25 +1,28 @@
 #include "stdafx.h"
 
-std::string shipcloud::api::helpers::StringHelper::to_string(std::wstring wstr)
+const std::string shipcloud::api::helpers::StringHelper::to_string(const std::wstring& wstr)
 {
-	auto cstr = std::shared_ptr<wchar_t>(wstr.c_str());
+	const auto pwstr = wstr.c_str();
 	const size_t len = wstr.length();
-	auto tp = std::unique_ptr<char>(new char[len]);
-	size_t w = wcstombs(tp.get(), cstr.get(), len);
-	if (w != len) {
+	auto pstr = new char[len];
+	const size_t cplen = wcstombs(pstr, pwstr, len);
+	pstr[len] = 0;
+	if (cplen != len) {
 		throw new std::exception("Could not convert to std::string");
 	}
-	return std::string(tp.release());
+	return std::string(std::move(pstr));
 }
 
-std::wstring shipcloud::api::helpers::StringHelper::to_wstring(std::string str)
+const std::wstring shipcloud::api::helpers::StringHelper::to_wstring(const std::string& str)
 {
-	auto pstr = std::shared_ptr<char>(str.c_str());
-	size_t size = str.length() * sizeof(wchar_t);
-	auto tp = std::unique_ptr<wchar_t>(new wchar_t[size]);
-	size_t w = mbstowcs(tp.get(), pstr.get(), size);
-	if (w != str.length()) {
+	const auto pstr = str.c_str();
+	const size_t len = str.length();
+	const size_t size = len * sizeof(wchar_t);
+	auto pwstr = new wchar_t[size];
+	const size_t cplen = mbstowcs(pwstr, pstr, size);
+	pwstr[size] = 0;
+	if (cplen != len) {
 		throw new std::exception("Could not convert to std::wstring");
 	}
-	return std::wstring(tp.release());
+	return std::wstring(std::move(pwstr));
 }

@@ -75,7 +75,7 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Add
 		}
 		return pplx::task_from_result(json::value(U("error")));
 	}).then([](json::value json) -> responses::AddressResponse {
-		return ShipCloud::parse_address_response(json);
+		return ShipCloud::parseAddressResponse(json);
 	});;
 }
 
@@ -104,7 +104,7 @@ pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses(
 		auto p = modernJson::parse(ss);
 		std::vector<responses::AddressResponse> vec;
 		for (auto& v : p.front()) {
-			vec.emplace_back(ShipCloud::parse_address_string(helpers::StringHelper::to_wstring(v.dump())));
+			vec.emplace_back(ShipCloud::parseAddressString(helpers::StringHelper::to_wstring(v.dump())));
 		}
 		return vec;
 	});;
@@ -135,6 +135,7 @@ const std::wstring ShipCloud::addressToString(const types::Address& address)
 const types::responses::AddressResponse ShipCloud::parseAddressString(const std::wstring& response) {
 	std::stringstream ss;
 	ss << helpers::StringHelper::to_string(response);
+	const auto str = ss.str();
 	auto val = json::value::parse(ss);
 	return ShipCloud::parseAddressResponse(val);
 }

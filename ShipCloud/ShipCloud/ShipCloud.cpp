@@ -32,26 +32,26 @@ ShipCloud::~ShipCloud()
 
 ShipCloud::ShipCloud(const ShipCloud& other) {
 	if (&other != this) {
-		this->cfg = other.cfg;
+		cfg = other.cfg;
 	}
 }
 
 ShipCloud::ShipCloud(ShipCloud&& other) {
 	if (&other != this) {
-		this->cfg = std::move(other.cfg);
+		cfg = std::move(other.cfg);
 	}
 }
 
 ShipCloud& ShipCloud::operator=(const ShipCloud& other) {
 	if (&other != this) {
-		this->cfg = other.cfg;
+		cfg = other.cfg;
 	}
 	return *this;
 }
 
 ShipCloud& ShipCloud::operator=(ShipCloud&& other) {
 	if (&other != this) {
-		this->cfg = std::move(other.cfg);
+		cfg = std::move(other.cfg);
 	}
 	return *this;
 }
@@ -59,12 +59,12 @@ ShipCloud& ShipCloud::operator=(ShipCloud&& other) {
 * Send asynchronous POST request to create a new Address
 */
 pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Address& address) {
-	auto req = this->createPostRequest(U("addresses"),
-									   this->cfg.apiConfig().apiCall(U("addresses")),
-									   this->getAuthData(), U("application/json"),
-									   this->addressToString(address));
+	auto req = createPostRequest(U("addresses"),
+									cfg.apiConfig().apiCall(U("addresses")),
+									getAuthData(), U("application/json"),
+									addressToString(address));
 
-	uri _uri(std::move(this->cfg.serverUrl()));
+	uri _uri(std::move(cfg.serverUrl()));
 	http_client client(_uri);
 	
 	return client.request(req).then([=](http_response response) -> pplx::task<json::value>
@@ -83,11 +83,11 @@ pplx::task<responses::AddressResponse> ShipCloud::createAddress(const types::Add
 * Send asynchronous GET request to query all known Addresses
 */
 pplx::task<std::vector<responses::AddressResponse>> ShipCloud::readAllAddresses() {
-	auto req = this->createGetRequest(U("addresses"), 
-									  this->cfg.apiConfig().apiCall(U("addresses")), 
-									  this->getAuthData(), U("application/json"));
+	auto req = createGetRequest(U("addresses"), 
+									  cfg.apiConfig().apiCall(U("addresses")), 
+									  getAuthData(), U("application/json"));
 	
-	uri _uri(this->cfg.serverUrl());
+	uri _uri(cfg.serverUrl());
 	http_client client(_uri);
 
 	return client.request(req).then([=](http_response response) -> pplx::task<json::value>
@@ -141,7 +141,7 @@ const types::responses::AddressResponse ShipCloud::parseAddressString(const std:
 }
 const std::wstring ShipCloud::composeApiCallUrl(const std::wstring callName)
 {	
-	auto version = this->cfg.apiConfig().apiCalls()[callName].version();
+	auto version = cfg.apiConfig().apiCalls()[callName].version();
 	std::wstringstream ss;
 	ss << U("/") << version << U("/") << callName;
 
@@ -181,7 +181,7 @@ const types::responses::AddressResponse ShipCloud::parseAddressResponse(const js
 */
 const std::wstring ShipCloud::getAuthData()
 {
-	auto strKey = conversions::to_utf8string(this->cfg.apiConfig().activeApiKey());
+	auto strKey = conversions::to_utf8string(cfg.apiConfig().activeApiKey());
 	const std::vector<uint8_t> data(strKey.begin(), strKey.end());
 	auto base64Key = conversions::to_base64(data);
 

@@ -30,8 +30,8 @@ namespace shipcloud {
 			ApiCall& ApiCall::operator=(const ApiCall& other)
 			{
 				if (&other != this) {
-					this->version_ = other.version_;
-					this->server_ = other.server_;
+					version_ = other.version_;
+					server_ = other.server_;
 				}
 				return *this;
 			}
@@ -39,20 +39,20 @@ namespace shipcloud {
 			ApiCall& ApiCall::operator=(ApiCall&& other)
 			{
 				if (&other != this) {
-					this->version_ = std::move(other.version_);
-					this->server_ = std::move(other.server_);
+					version_ = std::move(other.version_);
+					server_ = std::move(other.server_);
 				}
 				return *this;
 			}
 
 			std::wstring ApiCall::version() const
 			{
-				return this->version_;
+				return version_;
 			}
 
 			std::wstring ApiCall::server() const
 			{
-				return this->server_;
+				return server_;
 			}
 
 		}
